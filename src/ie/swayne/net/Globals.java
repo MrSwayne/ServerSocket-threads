@@ -4,7 +4,7 @@ import java.net.InetAddress;
 import java.util.LinkedList;
 
 public final class Globals {
-	public static int _PORT = 9502;
+	public static int _PORT = 9504;
 	public static String _IP = "localhost";
 	
 	private static LinkedList<Server> _ACTIVE_SERVERS = new LinkedList<>();

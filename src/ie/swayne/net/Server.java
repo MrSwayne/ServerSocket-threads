@@ -26,6 +26,14 @@ public class Server extends Thread {
 		connectedClients = new ArrayList<>();
 	}
 	
+	public int getCapacity() {
+		return this.MAX_CONNECTIONS;
+	}
+	
+	public int getSize() {
+		return connectedClients.size();
+	}
+	
 	public int getPort() {
 		return this.PORT;
 	}
@@ -135,9 +143,10 @@ public class Server extends Thread {
 		@Override
 		public void run() {
 			while(true) {
-			while(connectedClients.size() < MAX_CONNECTIONS) {
+			while(connectedClients.size() < MAX_CONNECTIONS && !server.isClosed()) {
 				Socket client;
-				try {
+				try
+				{
 					client = server.accept();
 					System.out.println("Accepted Connection from " + client.toString());
 					DataInputStream in = new DataInputStream(client.getInputStream());
@@ -147,15 +156,11 @@ public class Server extends Thread {
 					connectedClients.add(conn);
 					conn.start();
 				} catch (IOException e) {
-					try {
-						server.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
+				
 					e.printStackTrace();
 				}
 			}
-			System.out.println("Max connections exceeded. Exiting listener.");
+			if(server.isClosed())	break;
 			}
 		}
 	}

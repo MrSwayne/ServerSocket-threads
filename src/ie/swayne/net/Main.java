@@ -9,7 +9,6 @@ public class Main {
 	public static void main(String[] args) {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
-				System.out.println("Running!!!!");
 				LinkedList<Server> servers = Globals.GET_SERVERS();
 				for(int i = 0;i < servers.size();i++)
 					servers.get(i).close();
